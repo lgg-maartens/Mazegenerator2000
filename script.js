@@ -40,7 +40,7 @@ var t_height = CANVAS_HEIGHT / GRID_HEIGHT
 
 function draw() {
   
-  visited.forEach(tile => tile.draw(0));
+  visited.forEach(tile => tile.draw("rgba(0,0,0, 0.1)"));
   tile.draw("rgba(0,255,0, 1)");    
 
   if(visited.length == GRID_HEIGHT * GRID_WIDTH){
@@ -52,8 +52,7 @@ function draw() {
   let dir = getRandomDir(tile);
 
   // hey we're stuck..
-  if(!dir){
-    console.log("we're stuck ", tile);
+  if(!dir){   
     stack.pop();
     tile = stack[stack.length - 1];
     console.log(visited.length)
