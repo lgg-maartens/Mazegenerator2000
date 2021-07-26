@@ -3,16 +3,22 @@ CANVAS_HEIGHT = 400,
 GRID_HEIGHT = 20,
 GRID_WIDTH = 25
 
-class Tile {
+class Tile {  
 
    constructor(x, y) {
      this.x = x;
      this.y = y;
+
+     this.n = 0;
+     this.e = 2;
+     this.s = 2;
+     this.w = 0;
    }
 
    draw(color){
-     fill(color)   
-     rect((this.x * t_width) + 2,(this.y * t_height) + 2, t_width - 4, t_height - 4)
+     fill(color);
+     noStroke();
+     rect((this.x * t_width) + this.w,(this.y * t_height) + this.n, t_width - this.e, t_height - this.s)
    }
 }
 
@@ -39,6 +45,7 @@ function draw() {
 
   if(visited.length == GRID_HEIGHT * GRID_WIDTH){
     console.log("done!");
+    noLoop();
     return;
   }
 
@@ -52,7 +59,17 @@ function draw() {
     console.log(visited.length)
   }
   else{  
-    newTile = new Tile(tile.x + dir.x, tile.y + dir.y); 
+    newTile = new Tile(tile.x + dir.x, tile.y + dir.y);
+
+    if(dir.x == 1)
+      tile.e = 0;
+    if(dir.y == 1)
+      tile.s = 0;
+    if(dir.x == -1)
+      newTile.e = 0;
+    if(dir.y == -1)
+      newTile.s = 0;
+
     visited.push(newTile);
     stack.push(newTile);
     tile = newTile;  
@@ -81,11 +98,11 @@ function getRandomDir(tile){
   num = possibleDirs[Math.floor(Math.random() * possibleDirs.length)];
 
   if(num == 0)
-    return { x:0, y:-1};
+    return { x:0, y:-1 };
   if(num == 1)
-    return { x:1, y:0};
+    return { x:1, y:0 };
   if(num == 2)
-    return { x:0, y:1};
+    return { x:0, y:1 };
   if(num == 3)
-    return { x:-1, y:0};
+    return { x:-1, y:0 };
 }
